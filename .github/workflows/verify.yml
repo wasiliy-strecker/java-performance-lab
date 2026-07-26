@@ -47,8 +47,10 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
-      - name: Build benchmark executable
-        run: ./mvnw --batch-mode --no-transfer-progress -pl jmh-benchmarks -am package -DskipTests
+      - name: Build performance executables
+        run: >-
+          ./mvnw --batch-mode --no-transfer-progress
+          -pl jmh-benchmarks,jfr-diagnostics -am package -DskipTests
       - name: Exercise JMH in forked mode
         run: >-
           java -jar jmh-benchmarks/target/benchmarks.jar
@@ -57,3 +59,9 @@ jobs:
           -p invalidPercent=5
           -wi 1 -i 1 -f 1
           -w 100ms -r 100ms
+      - name: Record and analyze JFR diagnostics
+        run: |
+          java -Xmx64m -jar jfr-diagnostics/target/jfr-diagnostics.jar \
+            record allocation-aware target/ci-smoke.jfr
+          java -jar jfr-diagnostics/target/jfr-diagnostics.jar \
+            analyze target/ci-smoke.jfr

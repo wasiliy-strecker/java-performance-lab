@@ -49,6 +49,19 @@ java -jar jmh-benchmarks/target/benchmarks.jar \
 CI executes only a short forked smoke test. It deliberately does not fail builds
 on timing scores from shared runners.
 
+Record a deterministic workload with custom JFR events and inspect the result:
+
+```bash
+./mvnw -pl jfr-diagnostics -am package
+java -jar jfr-diagnostics/target/jfr-diagnostics.jar \
+  record allocation-aware target/order-ingestion.jfr
+java -jar jfr-diagnostics/target/jfr-diagnostics.jar \
+  analyze target/order-ingestion.jfr
+```
+
+Rejection events contain only a row index, stable reason, and input length.
+Customer identifiers and raw input rows are deliberately never recorded.
+
 Benchmark scores will be documented only together with machine, JVM, fork,
 warm-up, and measurement metadata.
 

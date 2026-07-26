@@ -32,6 +32,23 @@ rows. A readability-first parser and a delimiter-scanning parser share the same
 validation and aggregation contract. Thirty thousand deterministic differential
 test rows ensure that later measurements cannot hide a semantic shortcut.
 
+Build the standalone JMH executable and list its benchmarks:
+
+```bash
+./mvnw -pl jmh-benchmarks -am package
+java -jar jmh-benchmarks/target/benchmarks.jar -l
+```
+
+Run the ingestion comparison with normalized allocation metrics:
+
+```bash
+java -jar jmh-benchmarks/target/benchmarks.jar \
+  '.*OrderEventIngestionBenchmark.*' -prof gc
+```
+
+CI executes only a short forked smoke test. It deliberately does not fail builds
+on timing scores from shared runners.
+
 Benchmark scores will be documented only together with machine, JVM, fork,
 warm-up, and measurement metadata.
 

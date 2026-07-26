@@ -19,6 +19,13 @@ pretends that a shared runner can enforce stable performance thresholds.
 | `jmh-benchmarks` | JMH pitfalls, ingestion measurements, and executor comparisons |
 | `jfr-diagnostics` | Custom events plus an executable recorder and analyzer |
 
+Measured reference evidence is available in
+[docs/reference-results.md](docs/reference-results.md). The headline result for
+10,000 rows with 5% malformed input is 1.94x higher batch throughput and 99.998%
+fewer allocated bytes for the delimiter-scanning parser on the documented
+reference machine. Treat that as a reproducible case-study result, not a promise
+for unrelated workloads.
+
 ## Build
 
 Requirements: a full JDK 21 or newer.
@@ -62,7 +69,7 @@ java -jar jfr-diagnostics/target/jfr-diagnostics.jar \
 Rejection events contain only a row index, stable reason, and input length.
 Customer identifiers and raw input rows are deliberately never recorded.
 
-Benchmark scores will be documented only together with machine, JVM, fork,
-warm-up, and measurement metadata.
+Benchmark scores are documented only together with machine, JVM, fork, warm-up,
+and measurement metadata.
 
 Licensed under the [Apache License 2.0](LICENSE).

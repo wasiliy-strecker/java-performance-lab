@@ -11,11 +11,11 @@ This repository is being built as a production-minded performance investigation:
 correctness comes first, measurements include their environment, and CI never
 pretends that a shared runner can enforce stable performance thresholds.
 
-## Planned evidence
+## Evidence map
 
 | Module | Responsibility |
 |---|---|
-| `performance-workloads` | Equivalent readable and allocation-aware workloads with differential tests |
+| `performance-workloads` | Equivalent readable and allocation-aware order-event ingestion with differential tests |
 | `jmh-benchmarks` | JMH pitfalls, ingestion measurements, and executor comparisons |
 | `jfr-diagnostics` | Custom events plus an executable recorder and analyzer |
 
@@ -27,8 +27,12 @@ Requirements: a full JDK 21 or newer.
 ./mvnw clean verify
 ```
 
-The public API and benchmark evidence will be added in independently verified
-milestones. Benchmark scores will be documented only together with machine, JVM,
-fork, warm-up, and measurement metadata.
+The first case study processes `eventId|customerId|currency|amountMinor|status`
+rows. A readability-first parser and a delimiter-scanning parser share the same
+validation and aggregation contract. Thirty thousand deterministic differential
+test rows ensure that later measurements cannot hide a semantic shortcut.
+
+Benchmark scores will be documented only together with machine, JVM, fork,
+warm-up, and measurement metadata.
 
 Licensed under the [Apache License 2.0](LICENSE).

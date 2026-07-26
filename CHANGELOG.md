@@ -9,3 +9,4 @@ All notable changes to this project will be documented in this file.
 - Add forked JMH ingestion, benchmark-pitfall, and executor experiments.
 - Add custom JFR events plus executable recording and analysis diagnostics.
 - Publish raw JMH reference data with environment, methodology, and bounded conclusions.
+- Complete architecture, JFR, decision, contribution, and security documentation.

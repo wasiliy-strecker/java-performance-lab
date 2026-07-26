@@ -47,6 +47,15 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
+      - name: Validate reference evidence
+        run: >-
+          jq -e
+          'length > 0 and all(.[];
+          .forks == 2 and
+          .warmupIterations == 3 and
+          .measurementIterations == 5)'
+          docs/results/order-event-ingestion-jdk21.json
+          docs/results/executor-workloads-jdk21.json
       - name: Build performance executables
         run: >-
           ./mvnw --batch-mode --no-transfer-progress
